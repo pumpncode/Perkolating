@@ -1,0 +1,11 @@
+{
+	"id": "Perkolator",
+	"name": "Perk-O-lating",
+	"display_name": "Perk-O-lating",
+	"author": ["UHadMeAtFood"],
+	"description": "Balatro but perkeo",
+	"prefix": "Perkolator",
+	"main_file": "main.lua",
+	"priority": 0,
+	"version": "0.0.3"
+}
