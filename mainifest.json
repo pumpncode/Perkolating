@@ -6,8 +6,8 @@
 	"description": "Balatro but perkeo",
 	"prefix": "Perkolator",
 	"main_file": "main.lua",
-	"priority": 0,
-	"version": "0.0.3",
+	"priority": -9999,
+	"version": "0.0.4",
 	"dependencies": [
 		"Steamodded (>=1.*)"]
 }
