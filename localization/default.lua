@@ -20,6 +20,14 @@ return {
 					"destroy a random {C:attention}Consumable{}",
 					"replace it with a random {C:dark_edition}Negative{} Consumable"
 				}
+			},
+			j_Perkolator_PNA = {
+				name = 'PNA',
+				text = {
+                    'If the first hand of the round',
+                    'only contains one card.',
+                    'create a {C:dark_edition}Negative{} copy'
+                }
 			}
 		},
         Other={},
@@ -36,9 +44,13 @@ return {
         blind_states={},
         challenge_names={},
         collabs={},
-        dictionary={},
+        dictionary={
+            k_perkolator_perkeo_r = "Perkeo"
+        },
         high_scores={},
-        labels={},
+        labels={
+            k_perkolator_perkeo_r = "Perkeo"
+        },
         poker_hand_descriptions={},
         poker_hands={},
         quips={},
