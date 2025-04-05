@@ -10,15 +10,15 @@ return {
 				text = {
 					"Creates a {C:dark_edition}Negative{} copy of",
 					"{C:green}Perkeo{}",
-					"at the end of the {C:attention}shop",
+					"at the end of the {C:attention}shop{},",
 				}
 			},
 			j_Perkolator_Perkmentia = {
 					name = 'Perkmentia',
 					text = {
-					"at the end of the {C:attention}shop{}",
-					"destroy a random {C:attention}Consumable{}",
-					"replace it with a random {C:dark_edition}Negative{} Consumable"
+					"At the end of the {C:attention}shop{}",
+					"destroy a random {C:attention}consumable{} and",
+					"replace it with {C:attention}2{} random {C:dark_edition}Negative{} consumables",
 				}
 			},
 			j_Perkolator_PNA = {
@@ -28,7 +28,15 @@ return {
                     'only contains one card.',
                     'create a {C:dark_edition}Negative{} copy'
                 }
-			}
+			},
+            j_Perkolator_Perkeo_Template = {
+                name = "Perkeo Template",
+                text = {
+                    "gains  an additonal {X:mult,C:white}x#1#{} per",
+                    "{C:dark_edition}Negative{} Consumable",
+                    "{C:inactive}(currently {X:mult,C:white}x#2#{}){}"
+                }
+            }
 		},
         Other={},
         Planet={},

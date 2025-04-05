@@ -14,6 +14,10 @@ SMODS.Joker{
 	soul_pos = { x = 0, y = 1 },
 	blueprint_compat = true,
 	rarity = 'Perkolator_Perkeo_R',
+	loc_vars = function (self, info_queue, card)
+        --info_queue[#info_queue+1] = G.P_CENTERS.j_perkeo
+		info_queue[#info_queue+1] = G.P_CENTERS.e_negative 
+	end,
 	calculate = function (self,card,context)
 		if context.ending_shop then
 			G.E_MANAGER:add_event(Event({
@@ -27,6 +31,10 @@ SMODS.Joker{
 					return true
 				end
 			}))
+			return {
+				message = "Perkeo!",
+				colour = HEX('56a786')
+			}
 		end
 	end
 }
@@ -51,6 +59,10 @@ SMODS.Joker{
 					end
 				}))
 			end
+			return {
+				message = "What?",
+				colour = HEX('56a786')
+			}
 		end
 	end
 }
@@ -62,8 +74,12 @@ SMODS.Joker{
 	rarity = 'Perkolator_Perkeo_R',
 	blueprint_compat = true,
 	calculate = function (self,card,context)
-		if context.individual and context.cardarea == G.play then
-			if #context.full_hand  == 1 and  G.GAME.current_round.hands_played == 0  then
+		if context.first_hand_drawn and not context.blueprint then
+			local eval = function() return G.GAME.current_round.hands_played == 0 end
+			juice_card_until(card, eval, true)
+		end
+		if context.cardarea == G.jokers and context.before then
+			if #context.full_hand  == 1 and  G.GAME.current_round.hands_played == 0 then
 				G.playing_card = (G.playing_card and G.playing_card + 1) or 1
 				local _card = copy_card(context.full_hand[1], nil, nil, G.playing_card)
 				_card:set_edition('e_negative', true)
@@ -80,11 +96,41 @@ SMODS.Joker{
 					end
 				})) 
 				return {
-					message = localize('k_copied_ex'),
-					colour = G.C.CHIPS,
+					message = "DUPLICATED",
+					colour = HEX('56a786'),
 					playing_cards_created = {true}
 				}
 			end
 		end
 	end
 }
+
+SMODS.Joker{
+	key = "Perkeo_Template",
+	atlas = 'jokers',
+	rarity = "Perkolator_Perkeo_R",
+	pos = {x = 2, y = 0},
+	config = { extra = { Xmult_mod = 1,Xmult = 2} },
+	loc_vars = function(self,info_queue,card)
+		return { vars = {card.ability.extra.Xmult_mod, card.ability.extra.Xmult} }
+	end,
+	calculate = function (self,card,context)
+
+		if context.card_added  and context.card.ability.consumeable and context.card.edition and not context.blueprint then
+			if context.card.edition.type == 'negative' then
+			card.ability.extra.Xmult = card.ability.extra.Xmult + card.ability.extra.Xmult_mod
+			return {
+				message = localize { type = 'variable', key = 'a_xmult', vars = { card.ability.extra.Xmult,card.ability.extra.Xmult_mod } },
+				colour = G.C.MULT
+			}
+			end
+		end
+		if context.joker_main then
+			return {
+				message = localize { type = 'variable', key = 'a_xmult', vars = { card.ability.extra.Xmult } },
+				Xmult_mod = card.ability.extra.Xmult
+			}
+		end
+	end 
+}
+
