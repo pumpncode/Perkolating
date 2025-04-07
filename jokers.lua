@@ -170,7 +170,7 @@ SMODS.Joker{
 	pos = {x = 2, y = 1},
 	rarity = "Perkolator_Perkeo_R",
 	calculate = function (self,card,context)
-		if context.retrigger_joker_check and not context.retrigger_joker and context.other_card ~= card and (context.other_card.config.center.rarity == "Perkolator_Perkeo_R" or context.other_card.config.center.key == "j_perkeo") and context.joker_main then
+		if context.retrigger_joker_check and not context.retrigger_joker and context.other_card ~= card and (context.other_card.config.center.rarity == "Perkolator_Perkeo_R" or context.other_card.config.center.key == "j_perkeo") then
 			return {
 			  message =  localize('k_again_ex'),
 			  repetitions = 1,
