@@ -6,6 +6,13 @@ SMODS.Atlas{
 	-- 2x is 144 by 190
 }
 
+SMODS.Joker:take_ownership('perkeo', -- object key (class prefix not required)
+	{ -- table of properties to change from the existing object
+	rarity = 'Perkolator_Perkeo_R',
+	},
+	true -- silent | suppresses mod badge
+)
+
 
 SMODS.Joker{
 	key = 'PerkOlator',
@@ -88,7 +95,6 @@ SMODS.Joker{
 				table.insert(G.playing_cards, _card)
 				G.hand:emplace(_card)
 				_card.states.visible = nil
-
 				G.E_MANAGER:add_event(Event({
 					func = function()
 						_card:start_materialize()
@@ -106,31 +112,69 @@ SMODS.Joker{
 }
 
 SMODS.Joker{
-	key = "Perkeo_Template",
-	atlas = 'jokers',
+    key = "Perkeo_Template",
+    atlas = 'jokers',
+    rarity = "Perkolator_Perkeo_R",
+    pos = {x = 2, y = 0},
+    config = { extra = { Xmult_mod = 1,Xmult = 2} },
+    loc_vars = function(self,info_queue,card)
+        return { vars = {card.ability.extra.Xmult_mod, card.ability.extra.Xmult} }
+    end,
+    calculate = function (self,card,context)
+		if context.card_added then
+			sendDebugMessage("test", "perkeo")
+		end
+        if context.card_added  and context.card.ability.consumeable and context.card.edition and not context.blueprint then
+            sendDebugMessage("test", "perkeo")
+            if context.card.edition.type == 'negative' then
+                card.ability.extra.Xmult = card.ability.extra.Xmult + card.ability.extra.Xmult_mod
+                return {
+                    message = localize { type = 'variable', key = 'a_xmult', vars = { card.ability.extra.Xmult,card.ability.extra.Xmult_mod } },
+                    colour = G.C.MULT
+                }
+            end
+        end
+        if context.joker_main then
+            return {
+                message = localize { type = 'variable', key = 'a_xmult', vars = { card.ability.extra.Xmult } },
+                Xmult_mod = card.ability.extra.Xmult
+            }
+        end
+    end 
+}
+
+
+SMODS.Joker{
+	key = 'perkomon',
 	rarity = "Perkolator_Perkeo_R",
-	pos = {x = 2, y = 0},
-	config = { extra = { Xmult_mod = 1,Xmult = 2} },
+	atlas = 'jokers',
+	pos = {x = 3, y = 0},
+	config = {extra = {Xmult = 2}},
 	loc_vars = function(self,info_queue,card)
-		return { vars = {card.ability.extra.Xmult_mod, card.ability.extra.Xmult} }
+		return { vars = {card.ability.extra.Xmult} }
 	end,
 	calculate = function (self,card,context)
-
-		if context.card_added  and context.card.ability.consumeable and context.card.edition and not context.blueprint then
-			if context.card.edition.type == 'negative' then
-			card.ability.extra.Xmult = card.ability.extra.Xmult + card.ability.extra.Xmult_mod
-			return {
-				message = localize { type = 'variable', key = 'a_xmult', vars = { card.ability.extra.Xmult,card.ability.extra.Xmult_mod } },
-				colour = G.C.MULT
-			}
-			end
-		end
-		if context.joker_main then
+		if context.other_joker and context.other_joker.config.center.rarity == "Perkolator_Perkeo_R" and card ~= context.other_joker then
 			return {
 				message = localize { type = 'variable', key = 'a_xmult', vars = { card.ability.extra.Xmult } },
 				Xmult_mod = card.ability.extra.Xmult
 			}
 		end
-	end 
+	
+	end
 }
 
+SMODS.Joker{
+	key = 'just_the_perks',
+	atlas = 'jokers',
+	pos = {x = 2, y = 1},
+	rarity = "Perkolator_Perkeo_R",
+	calculate = function (self,card,context)
+		if context.retrigger_joker_check and not context.retrigger_joker and context.other_card ~= card and (context.other_card.config.center.rarity == "Perkolator_Perkeo_R" or context.other_card.config.center.key == "j_perkeo") and context.joker_main then
+			return {
+			  message =  localize('k_again_ex'),
+			  repetitions = 1,
+			}
+		  end
+	end,
+}

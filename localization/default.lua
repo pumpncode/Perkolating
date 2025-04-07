@@ -36,6 +36,20 @@ return {
                     "{C:dark_edition}Negative{} Consumable",
                     "{C:inactive}(currently {X:mult,C:white}x#2#{}){}"
                 }
+            },
+            j_Perkolator_perkomon = {
+                name = "PERKoMN card",
+                text = {
+                    "{X:mult,C:white}x#1#{} mult per perkeo card"
+                }
+            },
+            j_Perkolator_just_the_perks = {
+                name = "Just the Perks",
+                text = {
+                    "Retriggers all {X:green,C:white}Perkeo{} cards",
+                    "when scored."
+                }
+
             }
 		},
         Other={},
