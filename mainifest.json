@@ -7,7 +7,7 @@
 	"prefix": "Perkolator",
 	"main_file": "main.lua",
 	"priority": -9999,
-	"version": "0.0.7",
+	"version": "0.0.8",
 	"dependencies": [
 		"Steamodded (>=1.*)"]
 }

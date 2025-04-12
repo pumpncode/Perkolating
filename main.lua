@@ -22,6 +22,14 @@ Game.main_menu = function(change_context)
     return ret
 end
 
---loads mod componets
+SMODS.current_mod.optional_features = function()
+    return {
+      retrigger_joker = true
+    }
+  end
+  
+  --loads mod componets
+assert(SMODS.load_file('globals.lua'))()
 assert(SMODS.load_file('jokers.lua'))()
 assert(SMODS.load_file('rarity.lua'))()
+assert(SMODS.load_file('consumeables.lua'))()

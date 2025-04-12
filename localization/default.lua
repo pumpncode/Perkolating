@@ -53,7 +53,15 @@ return {
             }
 		},
         Other={},
-        Planet={},
+        Planet={
+            c_Perkolator_Perkt_o_nium = {
+                name = "Perktonium",
+                text = {
+                    "Add #1# level(s) to your most played hand.",
+                    "Increases every time this card is used"
+                }
+            }
+        },
         Spectral={},
         Stake={},
         Tag={},
