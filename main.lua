@@ -29,7 +29,7 @@ SMODS.current_mod.optional_features = function()
   end
   
   --loads mod componets
-assert(SMODS.load_file('globals.lua'))()
+
 assert(SMODS.load_file('jokers.lua'))()
 assert(SMODS.load_file('rarity.lua'))()
 assert(SMODS.load_file('consumeables.lua'))()
