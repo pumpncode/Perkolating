@@ -7,19 +7,25 @@ function Card:resize(mod, force_save)
 end
 
 -- Get the mod's config
-local config = SMODS.current_mod.config or {}
--- Set default config value if not present
-if config.title == nil then
-    config.title = true
+local perkolator_config = SMODS.current_mod.config
+-- Create config if it doesn't exist
+if not perkolator_config then
+    perkolator_config = {
+        title = true
+    }
+    SMODS.current_mod.config = perkolator_config
+    -- Set default value if config exists but title setting doesn't
+elseif perkolator_config.title == nil then
+    perkolator_config.title = true
 end
 -- Store initial config state for comparison
-local perkolator_enabled = copy_table(config)
+local perkolator_enabled = copy_table(perkolator_config)
 
 -- Add restart function to determine if restart is needed
 function G.FUNCS.perkolator_restart()
     local config_changed = false
     for k, v in pairs(perkolator_enabled) do
-        if v ~= config[k] then
+        if v ~= perkolator_config[k] then
             config_changed = true
             break
         end
@@ -52,7 +58,7 @@ SMODS.current_mod.config_tab = function()
         }}
     }, create_toggle({
         label = "Perkeo Card on Title Screen (Requires Restart)",
-        ref_table = config,
+        ref_table = perkolator_config,
         ref_value = "title",
         callback = G.FUNCS.perkolator_restart
     })}
