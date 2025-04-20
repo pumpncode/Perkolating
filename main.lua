@@ -79,7 +79,7 @@ SMODS.current_mod.config_tab = function()
 end
 
 -- Modify the main menu only if the title screen change is enabled
-if config["title"] then
+if perkolator_config["title"] then
     local mainmenuref2 = Game.main_menu
     Game.main_menu = function(change_context)
         local ret = mainmenuref2(change_context)
